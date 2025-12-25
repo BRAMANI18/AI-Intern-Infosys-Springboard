@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Music Library | Whispers of the Wires</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo">Whispers of the Wires</div>
+    <nav>
+      <a href="/static/index.html">Home</a>
+      <a href="/static/start_composing.html">Composing</a>
+      <a href="/static/library.html">Library</a>
+      <a href="/static/playlist.html">Playlist</a>
+      <a href="/static/predict.html">Predict Audio</a>
+      <a href="/static/login.html">Login</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Your Music Library</h1>
+    <div id="cards" class="library-grid"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Whispers of the Wires</p>
+  </footer>
+
+  <script>
+    async function load() {
+      const res = await fetch('/tracks');
+      const j = await res.json();
+      const cards = document.getElementById('cards');
+      cards.innerHTML = '';
+
+      if (j.status !== 'success' || !j.tracks.length) {
+        cards.innerHTML = '<p class="center">No tracks found in your library.</p>';
+        return;
+      }
+
+      for (const t of j.tracks) {
+        const div = document.createElement('div');
+        div.className = 'feature-card';
+        div.innerHTML = `
+          <h3>${t.genre || 'Unknown Genre'}</h3>
+          <p>${t.prompt || ''}</p>
+          <audio controls src="${t.file_url}"></audio>
+          <div class="btn-group">
+            <a href="${t.file_url}" class="btn" download>Download</a>
+            <button class="btn btn-delete" onclick="deleteTrack('${t.id}')">Delete</button>
+          </div>
+        `;
+        cards.appendChild(div);
+      }
+    }
+
+    async function deleteTrack(id) {
+      const fd = new FormData();
+      fd.append('track_id', id);
+      const res = await fetch('/delete_track', { method: 'POST', body: fd });
+      const j = await res.json();
+      if (j.status === 'deleted') load();
+      else alert('❌ Delete failed.');
+    }
+
+    load();
+  </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Powered Music Composition System</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo">Whispers of the Wires</div>
+   <nav>
+      <a href="/static/index.html">Home</a>
+      <a href="/static/start_composing.html">Composing</a>
+      <a href="/static/library.html">Library</a>
+      <a href="/static/playlist.html">Playlist</a>
+      <a href="/static/predict.html">predict_audio</a>
+      <a href="/static/login.html">Login</a>
+      
+    </nav>
+    
+  </header>
+<body>
+  <div class="auth-container">
+    <h2>Create an Account</h2>
+    <form onsubmit="redirectToLogin(event)">
+  <input type="text" name="username" placeholder="Username" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="password" name="password" placeholder="Password" required>
+  <button type="submit">Sign Up</button>
+</form>
+
+<script>
+  function redirectToLogin(event) {
+    event.preventDefault(); // prevent real form submission
+    alert("Signup successful! Redirecting to Login page...");
+    window.location.href = "/static/login.html"; // redirect
+  }
+</script>
+
+
+    
+
+    <p>Already have an account? <a href="/static/login.html">Login here</a></p>
+  </div>
+</body>
+</html>

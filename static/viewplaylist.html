@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Playlist - Whispers of the Wires</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo">Whispers of the Wires</div>
+    <nav>
+      <a href="/static/index.html">Home</a>
+      <a href="/static/start_composing.html">Composing</a>
+      <a href="/static/library.html">Library</a>
+      <a href="/static/playlist.html">Playlist</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <h1 id="playlist-title">Playlist</h1>
+    <div id="playlist-content" class="playlist-view"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Whispers of the Wires</p>
+  </footer>
+
+  <script>
+    // Load selected playlist
+    document.addEventListener("DOMContentLoaded", async () => {
+      const params = new URLSearchParams(window.location.search);
+      const genre = params.get("genre");
+
+      if (!genre) {
+        document.getElementById("playlist-content").innerHTML = "<p>No playlist selected.</p>";
+        return;
+      }
+
+      document.getElementById("playlist-title").textContent = `${genre} Playlist`;
+
+      const res = await fetch('/tracks');
+      const j = await res.json();
+      const tracks = j.tracks || [];
+      const filtered = tracks.filter(t => t.genre === genre);
+
+      const container = document.getElementById("playlist-content");
+      if (filtered.length === 0) {
+        container.innerHTML = "<p>No tracks found for this playlist.</p>";
+        return;
+      }
+
+      container.innerHTML = filtered.map(t => `
+        <div class="playlist-card">
+          <audio controls src="${t.file_url}"></audio>
+          <p>${t.prompt}</p>
+        </div>
+      `).join('');
+    });
+  </script>
+</body>
+</html>

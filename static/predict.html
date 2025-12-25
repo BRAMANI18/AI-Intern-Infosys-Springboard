@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Powered Music Composition System</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo">Whispers of the Wires</div>
+    <nav>
+      <a href="/static/index.html">Home</a>
+      <a href="/static/start_composing.html">Composing</a>
+      <a href="/static/library.html">Library</a>
+      <a href="/static/playlist.html">Playlist</a>
+      <a href="/static/predict.html">Predict Audio</a>
+      <a href="/static/login.html">Login</a>
+    </nav>
+  </header>
+
+  <section class="predict-section">
+    <h1>🎵 Song Genre & Language Prediction</h1>
+
+    <div class="predict-card">
+      <form id="predictForm">
+        <input type="file" name="file" accept="audio/*" required />
+        <button type="submit">Predict</button>
+      </form>
+      <div id="result"></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Whispers of the Wires. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById("predictForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      document.getElementById("result").innerHTML = "⏳ Predicting...";
+      const res = await fetch("/predict_audio", { method: "POST", body: formData });
+      const data = await res.json();
+      if (data.error) {
+        document.getElementById("result").innerHTML = "❌ " + data.error;
+      } else {
+        document.getElementById("result").innerHTML = `
+          <h3>✅ Prediction Results</h3>
+          <p><b>Genre:</b> ${data.predicted_genre}</p>
+          <p><b>Language:</b> ${data.predicted_language}</p>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
