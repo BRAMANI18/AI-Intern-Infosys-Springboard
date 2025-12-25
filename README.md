@@ -14,11 +14,11 @@ This project was developed during the AI Intern role at Infosys Springboard (Jul
 
 🎧 Genre Classification using pretrained audio models
 
-😊 Mood-aware prediction with ~85% accuracy
+😊 Mood-aware Prediction with ~85% accuracy
 
 📂 Music Library & Playlists for generated tracks
 
-🌐 Full-stack web application with seamless frontend–backend integration
+🌐 Full-stack Web Application with seamless frontend–backend integration
 
 🧠 Tech Stack
 Backend
@@ -85,7 +85,7 @@ Librosa
 SciPy
 
 Clone the Repository
-git clone https://github.com/your-username/whispers-of-the-wires.git
+git clone https://github.com/BRAMANI18/AI-Intern-Infosys-Springboard
 cd whispers-of-the-wires
 
 Install Dependencies
@@ -97,7 +97,7 @@ uvicorn main:app --reload
 Run Model Server
 python model_server.py
 
-Open Frontend
+Open Static Frontend
 
 Open index.html in your browser or serve it via a local server.
 
@@ -121,7 +121,7 @@ End-to-end coordination between frontend and backend
 
 🔮 Future Enhancements
 
-Cloud deployment (AWS/GCP/Azure)
+Cloud deployment (AWS / GCP / Azure)
 
 User authentication
 
